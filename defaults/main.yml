@@ -5,3 +5,6 @@ starrocks_mysql_password: root
 
 starrocks_parent_home: /home/starrocks/.local
 starrocks_java_home: /usr/local/java/jdk1.8.0_281
+
+starrocks_meta_dir: /data/starrocks/meta
+starrocks_storage_dir: /data/starrocks/storage

@@ -25,7 +25,7 @@
     copy: no
     src: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
     dest: '{{ starrocks_parent_home }}'
-    creates: '{{ starrocks_parent_home }}'
+    creates: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
     owner: starrocks
     group: starrocks
     mode: 0755
@@ -33,6 +33,7 @@
 # set soft link
 - name: link starrocks...
   become: yes
+  become_user: starrocks
   file:
     src: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
     dest: '{{ starrocks_link_dir }}'
