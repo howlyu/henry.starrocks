@@ -1,8 +1,5 @@
 ---
-- name: output for testing
-  debug:
-    msg: "{{ starrocks_home }}"
-# - import_tasks: usradd.yml
+- import_tasks: usradd.yml
 # - name: check for starrocks installation...
 #   become: yes
 #   stat:
