@@ -1,4 +1,12 @@
 ---
+# create starrocks_home
+- name: create starrocks home directory
+  file:
+    path: {{ starrocks_parent_home }}
+    state: directory
+    owner: starrocks
+    group: starrocks
+    mode: 0755
 # copy tar file to remote
 - name: copy tar file to remote
   become: yes
