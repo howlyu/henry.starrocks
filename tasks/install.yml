@@ -13,7 +13,7 @@
   become: yes
   copy:
     src: '{{ starrocks_archive }}'
-    dest: '{{ starrocks_install_dir }}'
+    dest: '{{ starrocks_install_dir }}/{{ starrocks_archive }}'
     owner: starrocks
     group: starrocks
     mode: 0644
