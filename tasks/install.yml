@@ -1,4 +1,15 @@
 ---
+# copy tar file to remote
+- name: copy tar file to remote
+  become: yes
+  copy:
+    src: {{ starrocks_archive }}
+    dest: {{ starrocks_install_dir }}
+    owner: starrocks
+    group: starrocks
+    mode: 0644
+
+# unarchive
 - name: check for starrocks installation...
   become: yes
   stat:
@@ -7,7 +18,7 @@
   register: starrocks_binary
 - when: not starrocks_binary.stat.exists
   block:
-    - name: unarchive flink...
+    - name: unarchive starrocks...
       become: yes
       become_user: root
       unarchive:
@@ -15,7 +26,8 @@
         src: '{{ starrocks_src_filepath }}'
         dest: '{{ starrocks_parent_home }}'
         creates: '{{ starrocks_install_dir }}'
-#
+
+# set soft link
 # - name: link starrocks...
 #   become: yes
 #   become_user: root
