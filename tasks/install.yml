@@ -2,7 +2,7 @@
 # create starrocks_home
 - name: create starrocks home directory
   file:
-    path: {{ starrocks_parent_home }}
+    path: '{{ starrocks_parent_home }}'
     state: directory
     owner: starrocks
     group: starrocks
