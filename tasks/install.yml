@@ -13,11 +13,7 @@
   become: yes
   copy:
     src: '{{ starrocks_archive }}'
-<<<<<<< HEAD
     dest: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
-=======
-    dest: '{{ starrocks_src_filepath }}'
->>>>>>> 2837f7d3ff78157436837c710a98e536193c1e46
     owner: starrocks
     group: starrocks
     mode: 0644
@@ -25,34 +21,14 @@
 # unarchive
 - name: unarchive starrocks...
   become: yes
-<<<<<<< HEAD
   unarchive:
-    copy: yes
+    copy: no
     src: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
     dest: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
     creates: '{{ starrocks_parent_home }}'
     owner: starrocks
     group: starrocks
     mode: 0644
-=======
-  stat:
-    path: '{{ starrocks_parent_home }}'
-  changed_when: false
-  register: starrocks_binary
-- when: not starrocks_binary.stat.exists
-  block:
-    - name: unarchive starrocks...
-      become: yes
-      become_user: root
-      unarchive:
-        copy: yes
-        src: '{{ starrocks_src_filepath }}'
-        dest: '{{ starrocks_parent_home }}'
-        creates: '{{ starrocks_parent_home }}'
-        owner: starrocks
-        group: starrocks
-        mode: 0644
->>>>>>> 2837f7d3ff78157436837c710a98e536193c1e46
 
 # set soft link
 # - name: link starrocks...
