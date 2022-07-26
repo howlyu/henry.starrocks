@@ -3,9 +3,18 @@
 - name: create group
   become: yes
   become_user: root
-  group: name=starrocks state=present
+  group:
+    name: starrocks
+    state: present
 # then create user in the same group
 - name: create user
   become: yes
   become_user: root
-  user: name=starrocks group=starrocks shell=/bin/bash
+  user:
+    name: starrocks
+    group: starrocks
+    shell: /bin/bash
+    generate_ssh_key: yes
+    ssh_key_type: rsa
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
