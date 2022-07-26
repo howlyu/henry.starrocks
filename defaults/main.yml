@@ -3,8 +3,5 @@ starrocks_home: /home/starrocks/.local/starrocks
 starrocks_ver: '2.0.8'
 starrocks_mysql_password: root
 
-
 starrocks_parent_home: /home/starrocks/.local
-starrocks_install_parent_dir: /home/starrocks
-
 starrocks_java_home: /usr/local/java/jdk1.8.0_281

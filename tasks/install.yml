@@ -13,31 +13,22 @@
   become: yes
   copy:
     src: '{{ starrocks_archive }}'
-    dest: '{{ starrocks_install_dir }}/{{ starrocks_archive }}'
+    dest: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
     owner: starrocks
     group: starrocks
     mode: 0644
 
 # unarchive
-- name: check for starrocks installation...
+- name: unarchive starrocks...
   become: yes
-  stat:
-    path: '{{ starrocks_install_dir }}'
-  changed_when: false
-  register: starrocks_binary
-- when: not starrocks_binary.stat.exists
-  block:
-    - name: unarchive starrocks...
-      become: yes
-      become_user: root
-      unarchive:
-        copy: yes
-        src: '{{ starrocks_src_filepath }}'
-        dest: '{{ starrocks_parent_home }}'
-        creates: '{{ starrocks_install_dir }}'
-        owner: starrocks
-        group: starrocks
-        mode: 0644
+  unarchive:
+    copy: yes
+    src: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
+    dest: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
+    creates: '{{ starrocks_parent_home }}'
+    owner: starrocks
+    group: starrocks
+    mode: 0644
 
 # set soft link
 # - name: link starrocks...
