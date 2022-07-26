@@ -3,8 +3,8 @@
 - name: copy tar file to remote
   become: yes
   copy:
-    src: {{ starrocks_archive }}
-    dest: {{ starrocks_install_dir }}
+    src: '{{ starrocks_archive }}'
+    dest: '{{ starrocks_install_dir }}'
     owner: starrocks
     group: starrocks
     mode: 0644
@@ -26,6 +26,9 @@
         src: '{{ starrocks_src_filepath }}'
         dest: '{{ starrocks_parent_home }}'
         creates: '{{ starrocks_install_dir }}'
+        owner: starrocks
+        group: starrocks
+        mode: 0644
 
 # set soft link
 # - name: link starrocks...
