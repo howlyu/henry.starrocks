@@ -1,6 +1,7 @@
 ---
 # create starrocks_home
 - name: create starrocks home directory
+  become: yes
   file:
     path: '{{ starrocks_parent_home }}'
     state: directory
