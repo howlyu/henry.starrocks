@@ -13,7 +13,7 @@
   become: yes
   copy:
     src: '{{ starrocks_archive }}'
-    dest: '{{ starrocks_install_dir }}/{{ starrocks_archive }}'
+    dest: '{{ starrocks_src_filepath }}'
     owner: starrocks
     group: starrocks
     mode: 0644
@@ -22,7 +22,7 @@
 - name: check for starrocks installation...
   become: yes
   stat:
-    path: '{{ starrocks_install_dir }}'
+    path: '{{ starrocks_parent_home }}'
   changed_when: false
   register: starrocks_binary
 - when: not starrocks_binary.stat.exists
@@ -34,7 +34,7 @@
         copy: yes
         src: '{{ starrocks_src_filepath }}'
         dest: '{{ starrocks_parent_home }}'
-        creates: '{{ starrocks_install_dir }}'
+        creates: '{{ starrocks_parent_home }}'
         owner: starrocks
         group: starrocks
         mode: 0644
