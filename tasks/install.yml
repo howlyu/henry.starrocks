@@ -16,7 +16,7 @@
     dest: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
     owner: starrocks
     group: starrocks
-    mode: 0644
+    mode: 0755
 
 # unarchive
 - name: unarchive starrocks...
@@ -24,28 +24,31 @@
   unarchive:
     copy: no
     src: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
-    dest: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
+    dest: '{{ starrocks_parent_home }}'
     creates: '{{ starrocks_parent_home }}'
     owner: starrocks
     group: starrocks
-    mode: 0644
+    mode: 0755
 
 # set soft link
-# - name: link starrocks...
-#   become: yes
-#   become_user: root
-#   file:
-#     src: '{{ starrocks_install_dir }}'
-#     dest: '{{ starrocks_link_dir }}'
-#     state: link
-#
-# - name: include starrocks in the default path...
-#   become: yes
-#   become_user: root
-#   with_items:
-#     - f: starrocks.sh
-#       d: /etc/profile.d
-#   template:
-#     src: '{{ item.f }}.j2'
-#     dest: '{{ item.d }}/{{ item.f }}'
-#     mode: '{{ item.m | default("0644") }}'
+- name: link starrocks...
+  become: yes
+  file:
+    src: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
+    dest: '{{ starrocks_link_dir }}'
+    state: link
+    force: yes
+    owner: starrocks
+    group: starrocks
+    mode: 0755
+
+
+- name: include starrocks in the default path...
+  become: yes
+  with_items:
+    - f: starrocks.sh
+      d: /etc/profile.d
+  template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '{{ item.m | default("0644") }}'
