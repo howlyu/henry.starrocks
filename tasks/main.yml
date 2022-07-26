@@ -1,0 +1,38 @@
+---
+- import_tasks: groupadd.yml
+- import_tasks: usradd.yml
+- name: check for starrocks installation...
+  become: yes
+  stat:
+    path: '{{ starrocks_install_dir }}'
+  changed_when: false
+  register: starrocks_binary
+- when: not starrocks_binary.stat.exists
+  block:
+    - name: unarchive flink...
+      become: yes
+      become_user: root
+      unarchive:
+        copy: yes
+        src: '{{ starrocks_src_filepath }}'
+        dest: '{{ starrocks_parent_home }}'
+        creates: '{{ starrocks_install_dir }}'
+
+- name: link starrocks...
+  become: yes
+  become_user: root
+  file:
+    src: '{{ starrocks_install_dir }}'
+    dest: '{{ starrocks_link_dir }}'
+    state: link
+
+- name: include starrocks in the default path...
+  become: yes
+  become_user: root
+  with_items:
+    - f: starrocks.sh
+      d: /etc/profile.d
+  template:
+    src: '{{ item.f }}.j2'
+    dest: '{{ item.d }}/{{ item.f }}'
+    mode: '{{ item.m | default("0644") }}'

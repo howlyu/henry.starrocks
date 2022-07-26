@@ -1,0 +1,12 @@
+---
+starrocks_name: StarRocks-{{ starrocks_ver }}
+starrocks_archive: '{{ starrocks_name }}.tar.gz'
+
+starrocks_fe_conf_path: {{ starrocks_home }}/fe/conf/fe.conf
+starrocks_be_conf_path: {{ starrocks_home }}/be/conf/be.conf
+starrocks_metadata_path: {{ starrocks_home }}/fe/meta
+starrocks_storage_root_path: {{ starrocks_home }}/be/storage
+
+starrocks_src_filepath: {{ starrocks_install_parent_dir }}/{{ starrocks_archive }}
+starrocks_install_dir: {{ starrocks_parent_home }}/{{ starrocks_name }}
+starrocks_link_dir: '{{ starrocks_parent_home }}/starrocks'
