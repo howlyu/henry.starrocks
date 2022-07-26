@@ -1,3 +1,5 @@
 ---
+- name: create group
+  group: name=starrocks
 - name: create user
   user: name=starrocks group=starrocks system=yes shell=/sbin/nologin
