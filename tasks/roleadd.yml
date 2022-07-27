@@ -1,0 +1,13 @@
+---
+- name: add follower and observer and be roles in mysql
+  become: yes
+  become_user: starrocks
+  community.mysql.mysql_query:
+    login_db: dorisdb
+    login_host: {{ groups["cluster1.master"] }}
+    login_port: 9030
+    login_user: root
+    query:
+      - ALTER SYSTEM ADD BACKEND "{{ item }}:9050"
+    with_items: {{ groups["cluster1.backends"] }}
+  tags: roles
