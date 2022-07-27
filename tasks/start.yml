@@ -1,7 +1,7 @@
 ---
 - name: start fe master
   become: yes
-  become: starrocks
+  become_user: starrocks
   shell:
     cmd: "sh {{ starrocks_home }}/fe/bin/start_fe.sh --daemon"
 
