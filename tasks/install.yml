@@ -7,7 +7,7 @@
     state: directory
     owner: starrocks
     group: starrocks
-    mode: 0755
+    mode: 0775
   tags: install
 
 # copy tar file to remote
@@ -18,7 +18,7 @@
     dest: '{{ starrocks_parent_home }}/{{ starrocks_archive }}'
     owner: starrocks
     group: starrocks
-    mode: 0755
+    mode: 0775
   tags: install
 
 # unarchive
@@ -31,7 +31,7 @@
     creates: '{{ starrocks_parent_home }}/{{ starrocks_name }}'
     owner: starrocks
     group: starrocks
-    mode: 0755
+    mode: 0775
   tags: install
 
 # set soft link
@@ -45,7 +45,7 @@
     force: yes
     owner: starrocks
     group: starrocks
-    mode: 0755
+    mode: 0775
   tags: install
 
 
