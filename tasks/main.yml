@@ -2,3 +2,4 @@
 - import_tasks: usradd.yml
 - import_tasks: install.yml
 - import_tasks: config.yml
+- import_tasks: start.yml

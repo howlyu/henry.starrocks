@@ -1,12 +1,39 @@
 ---
+# create meta dirtectory
+- name: mkdir for metadir
+  become: yes
+  become: starrocks
+  file:
+    path: '{{ starrocks_meta_dir }}'
+    state: directory
+
 - name: alter fe metadir
+  become: yes
+  become_user: starrocks
   lineinfile:
-    dest: '{{ starrocks_fe_conf_path }}'
+    path: '{{ starrocks_fe_conf_path }}'
     insertafter: '# store metadata'
-    line: 'meta_dir = {{ starrocks_meta_dir }}\n'
+    line: 'meta_dir = {{ starrocks_meta_dir }}'
+
+- name: append java home
+  become: yes
+  become_user: starrocks
+  lineinfile:
+    path: '{{ starrocks_fe_conf_path }}'
+    line: 'JAVA_HOME = {{ starrocks_java_home }}'
+
+# create storage dirtectory
+- name: mkdir for storage
+  become: yes
+  become: starrocks
+  file:
+    path: '{{ starrocks_storage_dir }}'
+    state: directory
 
 - name: alter be storage dir
+  become: yes
+  become_user: starrocks
   lineinfile:
-    desc: '{{ starrocks_be_conf_path }}'
-    insertafter: '# storage_root_path'
-    line: "storage_root_path = {{ starrocks_storage_dir }}\n"
+    path: '{{ starrocks_be_conf_path }}'
+    insertafter: '# storage_root_path = ${STARROCKS_HOME}/storage'
+    line: "storage_root_path = {{ starrocks_storage_dir }}"

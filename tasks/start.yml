@@ -1,10 +1,10 @@
 ---
 - name: start fe master
+  become: yes
+  become: starrocks
   shell:
-    cmd:
-      "sh {{ starrocks_home }}/fe/bin/start_fe.sh --daemon"
+    cmd: "sh {{ starrocks_home }}/fe/bin/start_fe.sh --daemon"
 
-- name: start be
-  shell:
-    cmd:
-      "sh {{ starrocks_home }}/be/bin/start_be.sh --daemon"
+# - name: start be
+#   shell:
+#     cmd: "sh {{ starrocks_home }}/be/bin/start_be.sh --daemon"
