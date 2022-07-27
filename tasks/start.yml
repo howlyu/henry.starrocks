@@ -1,11 +1,17 @@
 ---
+# start fe in master
 - name: start fe master
   become: yes
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --daemon"
-  tags: start
+  when: ansible_ssh_host in groups["cluster1.master"]
+  tags: start fe
 
-# - name: start be
-#   shell:
-#     cmd: "sh {{ starrocks_home }}/be/bin/start_be.sh --daemon"
+# start be in all
+- name: start be
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/be && bin/start_be.sh --daemon"
+  tags: start be
