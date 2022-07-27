@@ -28,6 +28,6 @@
   become: yes
   become_user: starrocks
   shell:
-    cmd: echo "ALTER SYSTEM ADD BROKER broker{{ item.key }} \"{{ item }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
+    cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ item }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
   with_items: '{{ groups["cluster1.brokers"] }}'
   tags: roles
