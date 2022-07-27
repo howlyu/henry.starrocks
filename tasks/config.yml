@@ -2,10 +2,12 @@
 # create meta dirtectory
 - name: mkdir for metadir
   become: yes
-  become: starrocks
   file:
     path: '{{ starrocks_meta_dir }}'
     state: directory
+    owner: starrocks
+    group: starrocks
+    mode: 0755
 
 - name: alter fe metadir
   become: yes
@@ -25,10 +27,12 @@
 # create storage dirtectory
 - name: mkdir for storage
   become: yes
-  become: starrocks
   file:
     path: '{{ starrocks_storage_dir }}'
     state: directory
+    owner: starrocks
+    group: starrocks
+    mode: 0755
 
 - name: alter be storage dir
   become: yes
