@@ -8,6 +8,7 @@
     owner: starrocks
     group: starrocks
     mode: 0755
+  tags: config
 
 - name: alter fe metadir
   become: yes
@@ -16,6 +17,7 @@
     path: '{{ starrocks_fe_conf_path }}'
     insertafter: '# store metadata'
     line: 'meta_dir = {{ starrocks_meta_dir }}'
+  tags: config
 
 - name: append java home
   become: yes
@@ -23,6 +25,7 @@
   lineinfile:
     path: '{{ starrocks_fe_conf_path }}'
     line: 'JAVA_HOME = {{ starrocks_java_home }}'
+  tags: config
 
 # create storage dirtectory
 - name: mkdir for storage
@@ -33,6 +36,7 @@
     owner: starrocks
     group: starrocks
     mode: 0755
+  tags: config
 
 - name: alter be storage dir
   become: yes
@@ -41,3 +45,4 @@
     path: '{{ starrocks_be_conf_path }}'
     insertafter: '# storage_root_path = ${STARROCKS_HOME}/storage'
     line: "storage_root_path = {{ starrocks_storage_dir }}"
+  tags: config

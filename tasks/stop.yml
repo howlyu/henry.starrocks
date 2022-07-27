@@ -1,0 +1,7 @@
+---
+- name: stop fe master
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "sh {{ starrocks_home }}/fe/bin/stop_fe.sh"
+  tags: stop

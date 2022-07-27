@@ -1,6 +1,7 @@
 ---
 starrocks_home: /home/starrocks/.local/starrocks
 starrocks_ver: '2.0.8'
+starrocks_cluster: 'cluster1'
 starrocks_mysql_password: root
 
 starrocks_parent_home: /home/starrocks/.local
