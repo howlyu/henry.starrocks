@@ -10,6 +10,13 @@
     mode: 0775
   tags: install
 
+- name: checking if starrocks home directory exists
+  become: yes
+  become_user: starrocks
+  stat:
+    path: '{{ starrocks_parent_home }}'
+  register: sr_parent_home
+
 # copy tar file to remote
 - name: copy tar file to remote
   become: yes
@@ -19,6 +26,7 @@
     owner: starrocks
     group: starrocks
     mode: 0775
+  when: sr_parent_home.stat.exists
   tags: install
 
 # unarchive
@@ -32,6 +40,7 @@
     owner: starrocks
     group: starrocks
     mode: 0775
+  when: sr_parent_home.stat.exists
   tags: install
 
 # set soft link
@@ -46,6 +55,7 @@
     owner: starrocks
     group: starrocks
     mode: 0775
+  when: sr_parent_home.stat.exists
   tags: install
 
 
