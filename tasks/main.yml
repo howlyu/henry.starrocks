@@ -4,3 +4,4 @@
 - import_tasks: config.yml
 - import_tasks: start.yml
 - import_tasks: roleadd.yml
+- import_tasks: stop.yml
