@@ -5,7 +5,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/fe && bin/stop_fe.sh"
-  when: ansible_ssh_host in groups["cluster1.master"] and starrocks_is_stop
+  when: ansible_ssh_host in groups["cluster1.master"]
   tags:
     - stop
     - stop_fe
@@ -16,7 +16,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/be && bin/stop_be.sh"
-  when: ansible_ssh_host in groups["cluster1.backends"] and starrocks_is_stop
+  when: ansible_ssh_host in groups["cluster1.backends"]
   tags:
     - stop
     - stop_be
@@ -27,7 +27,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/apache_hdfs_broker && bin/stop_broker.sh"
-  when: ansible_ssh_host in groups["cluster1.brokers"] and starrocks_is_stop
+  when: ansible_ssh_host in groups["cluster1.brokers"]
   tags:
     - stop
     - stop_broker

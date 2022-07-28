@@ -2,6 +2,6 @@
 - import_tasks: usradd.yml
 - import_tasks: install.yml
 - import_tasks: config.yml
+- import_tasks: stop.yml
 - import_tasks: start.yml
 - import_tasks: roleadd.yml
-- import_tasks: stop.yml
