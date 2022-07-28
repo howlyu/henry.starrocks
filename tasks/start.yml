@@ -1,11 +1,22 @@
 ---
+# register fe.id and be.id file
+- name: fe.id file
+  stat:
+    path: '{{ starrocks_home }}/fe/bin/fe.id'
+  register: fe_id
+
+- name: be.id file
+  stat:
+    path: '{{ starrocks_home }}/be/bin/be.id'
+  register: be_id
+
 # start fe in master
 - name: start fe master
   become: yes
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --daemon"
-  when: ansible_ssh_host in groups["cluster1.master"]
+  when: (ansible_ssh_host in groups["cluster1.master"]) and (fe_id.stat.exists)
   tags:
     - start
     - fe
