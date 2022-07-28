@@ -5,7 +5,9 @@
   shell:
     cmd: echo "ALTER SYSTEM ADD BACKEND \"{{ item }}:9050\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
   with_items: '{{ groups["cluster1.backends"] }}'
-  tags: roles
+  tags:
+    - roles
+    - be
 
 # - name: add follower
 #   become: yes
@@ -30,4 +32,6 @@
   shell:
     cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ item }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
   with_items: '{{ groups["cluster1.brokers"] }}'
-  tags: roles
+  tags:
+    - roles
+    - broker

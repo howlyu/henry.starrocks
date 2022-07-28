@@ -1,14 +1,34 @@
 ---
 # register fe.id and be.id file
-- name: fe.id file
+- name: checking if fe.pid file exists
+  become: yes
+  become_user: starrocks
   stat:
-    path: '{{ starrocks_home }}/fe/bin/fe.id'
-  register: fe_id
+    path: '{{ starrocks_home }}/fe/bin/fe.pid'
+  register: fe_pid
+  tags:
+    - start
+    - fe
 
-- name: be.id file
+- name: checking if be.pid file exists
+  become: yes
+  become_user: starrocks
   stat:
-    path: '{{ starrocks_home }}/be/bin/be.id'
-  register: be_id
+    path: '{{ starrocks_home }}/be/bin/be.pid'
+  register: be_pid
+  tags:
+    - start
+    - be
+
+- name: checking if apache_hdfs_broker.pid file exists
+  become: yes
+  become_user: starrocks
+  stat:
+    path: '{{ starrocks_home }}/apache_hdfs_broker/bin/apache_hdfs_broker.pid'
+  register: broker_pid
+  tags:
+    - start
+    - broker
 
 # start fe in master
 - name: start fe master
@@ -16,7 +36,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --daemon"
-  when: (ansible_ssh_host in groups["cluster1.master"]) and (fe_id.stat.exists)
+  when: (ansible_ssh_host in groups["cluster1.master"] and not fe_pid.stat.exists)
   tags:
     - start
     - fe
@@ -27,6 +47,18 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/be && bin/start_be.sh --daemon"
+  when: not be_pid.stat.exists
   tags:
     - start
     - be
+
+# start broker in all
+- name: start broker
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/apache_hdfs_broker && bin/start_broker.sh --daemon"
+  when: not broker_pid.stat.exists
+  tags:
+    - start
+    - broker
