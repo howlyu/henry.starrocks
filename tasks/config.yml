@@ -1,4 +1,16 @@
 ---
+# add ulimit
+- name: append ulimit by root
+  become: yes
+  lineinfile:
+    path: '/etc/security/limits.conf'
+    line:
+      - 'starrocks  soft  nofile 65536'
+      - 'starrocks  hard  nofile 65536'
+  tags:
+    - config
+    - ulimit
+
 # create meta dirtectory
 - name: mkdir for metadir
   become: yes
