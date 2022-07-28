@@ -7,8 +7,8 @@
   when: ansible_ssh_host in groups["cluster1.backends"]
 
   tags:
-    - roles
-    - be
+    - role
+    - role_be
 
 # - name: add follower
 #   become: yes
@@ -34,5 +34,5 @@
     cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ ansible_ssh_host }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
   when: ansible_ssh_host in groups["cluster1.brokers"]
   tags:
-    - roles
-    - broker
+    - role
+    - role_broker
