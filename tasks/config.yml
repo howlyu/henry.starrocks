@@ -75,3 +75,12 @@
     insertafter: '# storage_root_path = ${STARROCKS_HOME}/storage'
     line: "storage_root_path = {{ starrocks_storage_dir }}"
   tags: config
+
+# set java home in broker config
+- name: append java home
+  become: yes
+  become_user: starrocks
+  lineinfile:
+    path: '{{ starrocks_broker_conf_path }}'
+    line: 'JAVA_HOME = {{ starrocks_java_home }}'
+  tags: config
