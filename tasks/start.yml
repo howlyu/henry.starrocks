@@ -8,7 +8,7 @@
   register: fe_pid
   tags:
     - start
-    - fe
+    - start_fe
 
 - name: checking if be.pid file exists
   become: yes
@@ -18,7 +18,7 @@
   register: be_pid
   tags:
     - start
-    - be
+    - start_be
 
 - name: checking if apache_hdfs_broker.pid file exists
   become: yes
@@ -28,7 +28,7 @@
   register: broker_pid
   tags:
     - start
-    - broker
+    - start_broker
 
 # start fe in master
 - name: start fe master
@@ -39,7 +39,7 @@
   when: (ansible_ssh_host in groups["cluster1.master"] and not fe_pid.stat.exists)
   tags:
     - start
-    - fe
+    - start_fe
 
 # start be in all
 - name: start be
@@ -50,15 +50,16 @@
   when: not be_pid.stat.exists
   tags:
     - start
-    - be
+    - start_be
 
 # start broker in all
+# ATTENTION: export JAVA_HOME variable before execute start_broker.sh
 - name: start broker
   become: yes
   become_user: starrocks
   shell:
-    cmd: "cd {{ starrocks_home }}/apache_hdfs_broker && bin/start_broker.sh --daemon"
+    cmd: "export JAVA_HOME={{ starrocks_java_home }}; cd {{ starrocks_home }}/apache_hdfs_broker && bin/start_broker.sh --daemon"
   when: not broker_pid.stat.exists
   tags:
     - start
-    - broker
+    - start_broker
