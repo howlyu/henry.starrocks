@@ -47,7 +47,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/be && bin/start_be.sh --daemon"
-  when: not be_pid.stat.exists
+  when: (ansible_ssh_host in groups["cluster1.backends"] and not be_pid.stat.exists)
   tags:
     - start
     - start_be
@@ -59,7 +59,7 @@
   become_user: starrocks
   shell:
     cmd: "export JAVA_HOME={{ starrocks_java_home }}; cd {{ starrocks_home }}/apache_hdfs_broker && bin/start_broker.sh --daemon"
-  when: not broker_pid.stat.exists
+  when: (ansible_ssh_host in groups["cluster1.brokers"] and not broker_pid.stat.exists)
   tags:
     - start
     - start_broker

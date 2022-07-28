@@ -1,7 +1,33 @@
 ---
+# stop fe in master
 - name: stop fe master
   become: yes
   become_user: starrocks
   shell:
-    cmd: "sh {{ starrocks_home }}/fe/bin/stop_fe.sh"
-  tags: stop
+    cmd: "cd {{ starrocks_home }}/fe && bin/stop_fe.sh"
+  when: ansible_ssh_host in groups["cluster1.master"]
+  tags:
+    - stop
+    - stop_fe
+
+# stop be in all
+- name: stop be
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/be && bin/stop_be.sh"
+  when: ansible_ssh_host in groups["cluster1.backends"]
+  tags:
+    - stop
+    - stop_be
+
+# stop broker in all
+- name: stop broker
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/apache_hdfs_broker && bin/stop_broker.sh"
+  when: ansible_ssh_host in groups["cluster1.brokers"]
+  tags:
+    - stop
+    - stop_broker
