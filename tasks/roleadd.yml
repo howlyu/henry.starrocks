@@ -3,8 +3,9 @@
   become: yes
   become_user: starrocks
   shell:
-    cmd: echo "ALTER SYSTEM ADD BACKEND \"{{ item }}:9050\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
-  with_items: '{{ groups["cluster1.backends"] }}'
+    cmd: echo "ALTER SYSTEM ADD BACKEND \"{{ ansible_ssh_host }}:9050\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
+  when: ansible_ssh_host in groups["cluster1.backends"]
+
   tags:
     - roles
     - be
@@ -30,8 +31,8 @@
   become: yes
   become_user: starrocks
   shell:
-    cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ item }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
-  with_items: '{{ groups["cluster1.brokers"] }}'
+    cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ ansible_ssh_host }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
+  when: ansible_ssh_host in groups["cluster1.brokers"]
   tags:
     - roles
     - broker
