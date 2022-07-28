@@ -4,9 +4,8 @@
   become: yes
   lineinfile:
     path: '/etc/security/limits.conf'
-    line:
-      - 'starrocks  soft  nofile 65536'
-      - 'starrocks  hard  nofile 65536'
+    line: 'starrocks {{ item }}  nofile 65536'
+  with_items: ['soft', 'hard']
   tags:
     - config
     - ulimit
