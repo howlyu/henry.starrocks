@@ -57,6 +57,8 @@
   tags: config
 
 - name: alter fe_priority_networks
+  become: yes
+  become_user: starrocks
   lineinfile:
     path: "{{ starrocks_fe_conf_path }}"
     insertafter: "# priority_networks"
@@ -84,6 +86,8 @@
   tags: config
 
 - name: alter be_priority_networks
+  become: yes
+  become_user: starrocks
   lineinfile:
     path: "{{ starrocks_be_conf_path }}"
     insertafter: "# priority_networks"
