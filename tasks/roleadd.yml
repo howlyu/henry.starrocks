@@ -1,10 +1,22 @@
 ---
+# check master is start
+- name: Wait starrocks master is start and running
+  become: yes
+  become_user: starrocks
+  wait_for:
+    path: "{{ starrocks_home }}/fe/log/fe.log"
+    search_regex: ".*Open mysql server success on 9030.*"
+  when: ansible_ssh_host in groups["cluster1.master"]
+  tags:
+    - role
+
+# add all backends in mysql
 - name: add backend
   become: yes
   become_user: starrocks
   shell:
     cmd: echo "ALTER SYSTEM ADD BACKEND \"{{ ansible_ssh_host }}:9050\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
-  when: ansible_ssh_host in groups["cluster1.backends"] and mysqlstatus.rc == 0
+  when: ansible_ssh_host in groups["cluster1.backends"]
   tags:
     - role
     - role_be
@@ -25,13 +37,13 @@
 #   with_items: '{{ groups["cluster1.observer"] }}'
 #   tags: roles
 
-
+# add all brokers in mysql
 - name: add broker
   become: yes
   become_user: starrocks
   shell:
     cmd: echo "ALTER SYSTEM ADD BROKER broker1 \"{{ ansible_ssh_host }}:8000\";" | mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot
-  when: ansible_ssh_host in groups["cluster1.brokers"] and mysqlstatus.rc == 0
+  when: ansible_ssh_host in groups["cluster1.brokers"]
   tags:
     - role
     - role_broker
