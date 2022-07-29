@@ -35,3 +35,16 @@
     - stop
     - start_broker
     - stop_broker
+
+# register if mysql is alive
+- name: checking if mysql is alive
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: ' mysql -h{{ groups["cluster1.master"][0] }} -P9030 -uroot -e "show databases;"'
+  register: mysqlstatus
+  failed_when: mysqlstatus.rc == 2
+  tags:
+    - role
+    - role_be
+    - role_broker
