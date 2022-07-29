@@ -56,6 +56,13 @@
     line: 'JAVA_HOME = {{ starrocks_java_home }}'
   tags: config
 
+- name: alter fe_priority_networks
+  lineinfile:
+    path: "{{ starrocks_fe_conf_path }}"
+    insertafter: "# priority_networks"
+    line: "priority_networks = {{ starrocks_fe_priority_networks }}"
+  tags: config
+
 # create storage dirtectory
 - name: mkdir for storage
   become: yes
@@ -74,4 +81,11 @@
     path: '{{ starrocks_be_conf_path }}'
     insertafter: '# storage_root_path = ${STARROCKS_HOME}/storage'
     line: "storage_root_path = {{ starrocks_storage_dir }}"
+  tags: config
+
+- name: alter be_priority_networks
+  lineinfile:
+    path: "{{ starrocks_be_conf_path }}"
+    insertafter: "# priority_networks"
+    line: "priority_networks = {{ starrocks_be_priority_networks }}"
   tags: config
