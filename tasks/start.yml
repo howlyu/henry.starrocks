@@ -5,7 +5,18 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --daemon"
-  when: (ansible_ssh_host in groups["cluster1.master"] and not fe_pid.stat.exists)
+  when: (ansible_ssh_host in groups["dorisdb_master"] and not fe_pid.stat.exists)
+  tags:
+    - start
+    - start_fe
+
+# start fe follower in master
+- name: start fe master
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --helper "{{ groups["dorisdb_master"][0] }}:9010" --daemon"
+  when: (ansible_ssh_host in groups["dorisdb_follower"] and not fe_pid.stat.exists)
   tags:
     - start
     - start_fe
@@ -16,7 +27,7 @@
   become_user: starrocks
   shell:
     cmd: "cd {{ starrocks_home }}/be && bin/start_be.sh --daemon"
-  when: (ansible_ssh_host in groups["cluster1.backends"] and not be_pid.stat.exists)
+  when: (ansible_ssh_host in groups["dorisdb_backends"] and not be_pid.stat.exists)
   tags:
     - start
     - start_be
@@ -28,7 +39,7 @@
   become_user: starrocks
   shell:
     cmd: "export JAVA_HOME={{ starrocks_java_home }}; cd {{ starrocks_home }}/apache_hdfs_broker && bin/start_broker.sh --daemon"
-  when: (ansible_ssh_host in groups["cluster1.brokers"] and not broker_pid.stat.exists)
+  when: (ansible_ssh_host in groups["dorisdb_brokers"] and not broker_pid.stat.exists)
   tags:
     - start
     - start_broker

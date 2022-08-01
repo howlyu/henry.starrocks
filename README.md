@@ -5,32 +5,34 @@ Install and manage StarRocks automatically
 
 Prepare
 ------------
-1. Install ansible
-2. Download it from https://www.starrocks.com/zh-CN/download/community to directory (henry.starrocks/files).
-3. Add hosts in /etc/ansible/hosts
+1. Installed the JAVA on all FE
+2. Installed the Mysql client on the master of all FE
+3. Set up SSH without passwords
+4. Download it from https://www.starrocks.com/zh-CN/download/community to directory (henry.starrocks/files)
+5. Add hosts in /etc/ansible/hosts
 e.g:
 ```
-[cluster1.all]
+[dorisdb_all]
 192.168.30.128
 192.168.30.129
 192.168.30.130
 
-[cluster1.frontends]
+[dorisdb_frontends]
 192.168.30.128
 192.168.30.129
 
-[cluster1.master]
+[dorisdb_master]
 192.168.30.128
 
-[cluster1.follower]
+[dorisdb_follower]
 192.168.30.129
 
-[cluster1.backends]
+[dorisdb_backends]
 192.168.30.128
 192.168.30.129
 192.168.30.130
 
-[cluster1.brokers]
+[dorisdb_brokers]
 192.168.30.128
 192.168.30.129
 192.168.30.130
@@ -56,7 +58,7 @@ Example Playbook
 ----------------
 
 ```yml
-- hosts: cluster1.all
+- hosts: dorisdb_all
   roles:
     - henry.starrocks
 ```
