@@ -6,5 +6,5 @@ starrocks_java_home: /usr/local/java/jdk1.8.0_281
 starrocks_meta_dir: /data/starrocks/meta
 starrocks_storage_dir: /data/starrocks/storage
 
-starrocks_fe_priority_networks: 192.168.1.0/24
-starrocks_be_priority_networks: 192.168.1.0/24
+starrocks_fe_priority_networks: 192.168.0.0/16
+starrocks_be_priority_networks: 192.168.0.0/16
