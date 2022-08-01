@@ -63,6 +63,17 @@ Example Playbook
     - henry.starrocks
 ```
 
+Reinstall
+----------------
+1. Clean the files
+
+```shell
+$ ansible dorisdb_all -m shell -a "sudo rm -rf /home/starrocks/.local"
+$ ansible dorisdb_all -m shell -a "sudo rm -rf /data/starrocks/meta"
+$ ansible dorisdb_all -m shell -a "sudo rm -rf /data/starrocks/storage"
+```
+2. Execute the Playbook
+
 License
 -------
 
