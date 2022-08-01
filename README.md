@@ -82,4 +82,4 @@ MIT
 Author Information
 ------------------
 
-Henry Yu <haoyuanfen81@gmail.com>
+Henry
