@@ -15,7 +15,7 @@
   become: yes
   become_user: starrocks
   shell:
-    cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --helper "{{ groups["dorisdb_master"][0] }}:9010" --daemon"
+    cmd: "cd {{ starrocks_home }}/fe && bin/start_fe.sh --helper \"{{ groups['dorisdb_master'][0] }}:9010\" --daemon"
   when: (ansible_ssh_host in groups["dorisdb_follower"] and not fe_pid.stat.exists)
   tags:
     - start

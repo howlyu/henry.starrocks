@@ -10,6 +10,17 @@
     - stop
     - stop_fe
 
+# stop fe in follower
+- name: stop fe follower
+  become: yes
+  become_user: starrocks
+  shell:
+    cmd: "cd {{ starrocks_home }}/fe && bin/stop_fe.sh"
+  when: ansible_ssh_host in groups["dorisdb_follower"]
+  tags:
+    - stop
+    - stop_fe
+
 # stop be in all
 - name: stop be
   become: yes

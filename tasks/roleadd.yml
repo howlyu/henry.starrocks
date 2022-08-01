@@ -19,7 +19,7 @@
   tags:
     - role
     - role_fe
-    _ role_fe_follower
+    - role_fe_follower
 
 # - name: add observer
 #   become: yes
