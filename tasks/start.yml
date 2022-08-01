@@ -11,7 +11,7 @@
     - start_fe
 
 # start fe follower in master
-- name: start fe master
+- name: start fe folloer
   become: yes
   become_user: starrocks
   shell:
